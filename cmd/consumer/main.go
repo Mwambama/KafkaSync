@@ -1,10 +1,11 @@
 package main
 
 import (
-	"context" // Import context for managing request lifecycle
+	"context"
 	"fmt"
 	"log"
-	"time" // Import time for sleep functionality
+	"os"
+	"time"
 
 	"github.com/segmentio/kafka-go"
 )
@@ -20,9 +21,9 @@ func main() {
 		Brokers:        []string{brokerAddress},
 		Topic:          topic,
 		GroupID:        groupID,
-		MinBytes:       1,           // Smallest message size to fetch
-		MaxBytes:       10e6,        // 10MB max size
-		CommitInterval: time.Second, // Commit offsets every second
+		MinBytes:       1,
+		MaxBytes:       10e6,
+		CommitInterval: time.Second,
 	})
 	defer reader.Close()
 
@@ -37,6 +38,44 @@ func main() {
 			continue
 		}
 
-		fmt.Printf("📥 Received file name: %s\n", string(message.Value))
+		fileName := string(message.Value)
+		fmt.Printf("⬇️  Downloading file: %s...\n", fileName)
+
+		// Simulate download delay
+		time.Sleep(1 * time.Second)
+
+		// Simulate saving the file
+		outputPath := fmt.Sprintf("./downloads/%s", fileName)
+		err = saveDummyFile(outputPath, fileName)
+		if err != nil {
+			log.Printf("❌ Failed to save %s: %v", fileName, err)
+		} else {
+			fmt.Printf("✅ Download complete: %s\n", outputPath)
+		}
 	}
 }
+
+// ✅ Move helper functions OUTSIDE main
+
+func saveDummyFile(path string, content string) error {
+	err := ensureDir("./downloads")
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(path, []byte("Downloaded: "+content), 0644)
+}
+
+func ensureDir(dir string) error {
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		return os.MkdirAll(dir, 0755)
+	}
+	return nil
+}
+
+// ✅ Add error handling for directory creation
+// func ensureDir(dir string) error {
+// 	if _, err := os.Stat(dir); os.IsNotExist(err) {
+// 		return os.MkdirAll(dir, 0755)
+// 	}
+// 	return nil
+// }
