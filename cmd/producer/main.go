@@ -23,10 +23,7 @@ func main() {
 	defer writer.Close()
 
 	// ✅ Test connection with a dummy message
-	// err := writer.WriteMessages(nil, kafka.Message{
-	// 	Key:   []byte("test"),
-	// 	Value: []byte("Kafka test connection message"),
-	// })
+	fmt.Println("🔗 Testing Kafka connection...")
 	ctx := context.TODO()
 	err := writer.WriteMessages(ctx, kafka.Message{
 		Key:   []byte("test"),
@@ -50,15 +47,6 @@ func main() {
 			log.Printf("❌ Error reading input: %v\n", err)
 			continue
 		}
-
-		// Send to Kafka
-		// err = writer.WriteMessages(
-		// 	nil,
-		// 	kafka.Message{
-		// 		Key:   []byte(fileName),
-		// 		Value: []byte(fileName),
-		// 	},
-		// )
 
 		err = writer.WriteMessages(ctx, kafka.Message{
 			Key:   []byte(fileName),
