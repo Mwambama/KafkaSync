@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"log"
 
@@ -22,10 +23,16 @@ func main() {
 	defer writer.Close()
 
 	// ✅ Test connection with a dummy message
-	err := writer.WriteMessages(nil, kafka.Message{
+	// err := writer.WriteMessages(nil, kafka.Message{
+	// 	Key:   []byte("test"),
+	// 	Value: []byte("Kafka test connection message"),
+	// })
+	ctx := context.TODO()
+	err := writer.WriteMessages(ctx, kafka.Message{
 		Key:   []byte("test"),
 		Value: []byte("Kafka test connection message"),
 	})
+
 	if err != nil {
 		log.Fatalf("❌ Kafka connection test failed: %v\n", err)
 	} else {
@@ -45,13 +52,19 @@ func main() {
 		}
 
 		// Send to Kafka
-		err = writer.WriteMessages(
-			nil,
-			kafka.Message{
-				Key:   []byte(fileName),
-				Value: []byte(fileName),
-			},
-		)
+		// err = writer.WriteMessages(
+		// 	nil,
+		// 	kafka.Message{
+		// 		Key:   []byte(fileName),
+		// 		Value: []byte(fileName),
+		// 	},
+		// )
+
+		err = writer.WriteMessages(ctx, kafka.Message{
+			Key:   []byte(fileName),
+			Value: []byte(fileName),
+		})
+
 		if err != nil {
 			log.Printf("❌ Failed to send message: %v\n", err)
 		} else {
