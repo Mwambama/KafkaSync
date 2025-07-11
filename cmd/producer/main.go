@@ -8,8 +8,9 @@ import (
 )
 
 func main() {
-	brokerAddress := "localhost:9092"
+	//brokerAddress := "localhost:9092"
 	//brokerAddress := "host.docker.internal:9092"
+	brokerAddress := "localhost:9094"
 
 	topic := "kafkasync-files"
 
