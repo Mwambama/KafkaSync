@@ -24,6 +24,7 @@ func main() {
 
 	// 🔧 Set log output to both file and terminal
 	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
+	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
 
 	// Define Kafka config
 	brokerAddress := "localhost:9094"
