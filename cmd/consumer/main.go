@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"time"
@@ -11,6 +12,19 @@ import (
 )
 
 func main() {
+
+	// 🔧 Set up logging to both terminal and file
+	// 🔧 Create or open the log file
+	logFile, err := os.OpenFile("consumer.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Printf("❌ Failed to open log file: %v\n", err)
+		return
+	}
+	defer logFile.Close()
+
+	// 🔧 Set log output to both file and terminal
+	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
+
 	// Define Kafka config
 	brokerAddress := "localhost:9094"
 	topic := "kafkasync-files"
@@ -26,8 +40,10 @@ func main() {
 		CommitInterval: time.Second,
 	})
 	defer reader.Close()
-
-	fmt.Println("✅ Kafka consumer is now listening for messages...")
+	//printing to console
+	// fmt.Println("✅ Kafka consumer is now listening for messages...")
+	// logging to file
+	log.Println("✅ Kafka consumer is now listening for messages...")
 
 	// Step 2: Consume messages in a loop
 	for {
@@ -39,7 +55,7 @@ func main() {
 		}
 
 		fileName := string(message.Value)
-		fmt.Printf("⬇️  Downloading file: %s...\n", fileName)
+		log.Printf("⬇️  Downloading file: %s...\n", fileName)
 
 		// Simulate download delay
 		time.Sleep(1 * time.Second)
@@ -50,7 +66,7 @@ func main() {
 		if err != nil {
 			log.Printf("❌ Failed to save %s: %v", fileName, err)
 		} else {
-			fmt.Printf("✅ Download complete: %s\n", outputPath)
+			log.Printf("✅ Download complete: %s\n", outputPath)
 		}
 	}
 }
