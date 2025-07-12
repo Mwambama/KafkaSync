@@ -63,7 +63,24 @@ func main() {
 
 		// Simulate saving the file
 		outputPath := fmt.Sprintf("./downloads/%s", fileName)
-		err = saveDummyFile(outputPath, fileName)
+		//err = saveDummyFile(outputPath, fileName)
+		// ✅ Save the file to the downloads directory
+		// retry logic
+		maxRetries := 3
+		for attempt := 1; attempt <= maxRetries; attempt++ {
+			err = saveDummyFile(outputPath, fileName)
+			if err == nil {
+				log.Printf("✅ Download complete: %s\n", outputPath)
+				break
+			}
+			log.Printf("⚠️  Attempt %d: Failed to save %s: %v", attempt, fileName, err)
+			time.Sleep(1 * time.Second)
+		}
+
+		if err != nil {
+			log.Printf("❌ All retries failed for %s\n", fileName)
+		}
+
 		if err != nil {
 			log.Printf("❌ Failed to save %s: %v", fileName, err)
 		} else {
@@ -80,6 +97,7 @@ func saveDummyFile(path string, content string) error {
 		return err
 	}
 	return os.WriteFile(path, []byte("Downloaded: "+content), 0644)
+	//return errors.New("fake fail")
 }
 
 func ensureDir(dir string) error {
@@ -88,11 +106,3 @@ func ensureDir(dir string) error {
 	}
 	return nil
 }
-
-// ✅ Add error handling for directory creation
-// func ensureDir(dir string) error {
-// 	if _, err := os.Stat(dir); os.IsNotExist(err) {
-// 		return os.MkdirAll(dir, 0755)
-// 	}
-// 	return nil
-// }
