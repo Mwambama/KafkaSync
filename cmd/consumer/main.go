@@ -89,7 +89,8 @@ func main() {
 	}
 }
 
-// ✅ Move helper functions OUTSIDE main
+// saveDummyFile simulates saving a file by writing a dummy content to the specified path.
+// In a real application, this would be replaced with actual file download logic.
 
 func saveDummyFile(path string, content string) error {
 	err := ensureDir("./downloads")
