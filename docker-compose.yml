@@ -1,10 +1,11 @@
-version: "3"
+version: "3.8"
+
 services:
   kafka:
-    image: 'bitnami/kafka:latest'
+    image: bitnami/kafka:latest
+    container_name: kafka
     ports:
-      - '9094:9094'  # external access
-
+      - "9094:9094"  # External access
     environment:
       - KAFKA_ENABLE_KRAFT=yes
       - KAFKA_CFG_NODE_ID=1
@@ -15,3 +16,12 @@ services:
       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@:9093
       - ALLOW_PLAINTEXT_LISTENER=yes
+
+  sftp:
+    image: atmoz/sftp
+    container_name: sftp
+    ports:
+      - "2222:22"
+    volumes:
+      - ./sftp-data:/home/testuser/uploads
+    command: testuser:password:1001

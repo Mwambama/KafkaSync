@@ -2,17 +2,21 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 
 	"github.com/segmentio/kafka-go"
 )
 
-func main() {
-	//brokerAddress := "localhost:9092"
-	//brokerAddress := "host.docker.internal:9092"
-	brokerAddress := "localhost:9094"
+type DownloadNotification struct {
+	Hash     string `json:"info_hash"`
+	Name     string `json:"name"`
+	Location string `json:"location"`
+}
 
+func main() {
+	brokerAddress := "localhost:9094"
 	topic := "kafkasync-files"
 
 	writer := kafka.NewWriter(kafka.WriterConfig{
@@ -22,41 +26,41 @@ func main() {
 	})
 	defer writer.Close()
 
-	// ✅ Test connection with a dummy message
-	fmt.Println("🔗 Testing Kafka connection...")
-	ctx := context.TODO()
-	err := writer.WriteMessages(ctx, kafka.Message{
-		Key:   []byte("test"),
-		Value: []byte("Kafka test connection message"),
-	})
+	fmt.Println("✅ Kafka writer ready. Enter file details:")
 
-	if err != nil {
-		log.Fatalf("❌ Kafka connection test failed: %v\n", err)
-	} else {
-		fmt.Println("✅ Kafka test message sent successfully!")
-	}
-
-	fmt.Println("✅ Kafka writer ready. Type a file name and press ENTER to send.")
-
-	// 🔁 Loop for interactive input
 	for {
-		fmt.Print("📤 Enter file name: ")
-		var fileName string
-		_, err := fmt.Scanln(&fileName)
+		var hash, name, location string
+
+		fmt.Print("🔢 Enter hash: ")
+		fmt.Scanln(&hash)
+
+		fmt.Print("📄 Enter file name: ")
+		fmt.Scanln(&name)
+
+		fmt.Print("🌐 Enter remote location path: ")
+		fmt.Scanln(&location)
+
+		notification := DownloadNotification{
+			Hash:     hash,
+			Name:     name,
+			Location: location,
+		}
+
+		payload, err := json.Marshal(notification)
 		if err != nil {
-			log.Printf("❌ Error reading input: %v\n", err)
+			log.Printf("❌ JSON encode failed: %v", err)
 			continue
 		}
 
-		err = writer.WriteMessages(ctx, kafka.Message{
-			Key:   []byte(fileName),
-			Value: []byte(fileName),
+		err = writer.WriteMessages(context.Background(), kafka.Message{
+			Key:   []byte(name),
+			Value: payload,
 		})
 
 		if err != nil {
-			log.Printf("❌ Failed to send message: %v\n", err)
+			log.Printf("❌ Failed to send message: %v", err)
 		} else {
-			fmt.Printf("📨 Sent to Kafka: %s\n", fileName)
+			fmt.Printf("📨 Sent to Kafka: %+v\n", notification)
 		}
 	}
 }

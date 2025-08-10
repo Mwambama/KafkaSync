@@ -5,3 +5,177 @@
 2025/07/11 23:41:46 ⬇️  Downloading file: broken.txt......
 2025/07/11 23:41:47 ✅ Download complete: ./downloads/broken.txt...
 2025/07/11 23:41:47 ✅ Download complete: ./downloads/broken.txt...
+2025/07/20 16:31:06 ✅ Kafka consumer is now listening for messages...
+2025/07/20 16:31:10 ⬇️  Preparing to download: {Hash:abc123 Name:sample.txt Location:/remote/media/files/}
+2025/07/20 16:31:10 ✅ Download complete: ./downloads/sample.txt
+2025/07/21 15:29:04 ⬇️  Preparing to download: {Hash:abcd23 Name:samples1.txt Location:/remote/media/files/}
+2025/07/21 15:29:04 ✅ Download complete: ./downloads/samples1.txt
+2025/07/21 16:53:20 ⬇️  Preparing to download: {Hash:abc123 Name:testfile.mkv Location:/downloads}
+2025/07/21 16:53:20 ✅ Download complete: ./downloads/testfile.mkv
+2025/07/21 17:31:54 ⬇️  Preparing to download: {Hash:abcd23 Name:testfiles.mAv Location:/downlaods3}
+2025/07/21 17:31:54 ✅ Download complete: ./downloads/testfiles.mAv
+2025/07/22 01:34:56 ✅ Kafka consumer is now listening for messages...
+2025/07/22 01:34:59 ⬇️  Preparing to download: {Hash:abc1234 Name:testfiles.mk Location:/downloads}
+2025/07/22 01:34:59 🛠 Executing command: lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/downloads/testfiles.mk
+2025/07/22 01:34:59 🚀 Running download: lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/downloads/testfiles.mk
+2025/07/22 01:34:59 ❌ Download failed for testfiles.mk: exec: "lftp": executable file not found in %PATH%
+2025/07/22 01:34:59 ⬇️  Preparing to download: {Hash:abcd12 Name:textfiles.mkv Location:/downloads}
+2025/07/22 01:34:59 🛠 Executing command: lftp -c pget -n 4 -c sftp://user:pass@example.com/downloads/textfiles.mkv
+2025/07/22 01:34:59 🚀 Running download: lftp -c pget -n 4 -c sftp://user:pass@example.com/downloads/textfiles.mkv
+2025/07/22 01:34:59 ❌ Download failed for textfiles.mkv: exec: "lftp": executable file not found in %PATH%
+2025/07/22 11:03:57 ❌ Error reading message: fetching message: [6] Not Leader For Partition: the client attempted to send messages to a replica that is not the leader for some partition, the client's metadata are likely out of date
+2025/07/22 19:31:33 ✅ Kafka consumer is now listening for messages...
+2025/07/22 20:14:57 ⬇️  Preparing to download: {Hash:abc12 Name:textfilesnew.mk Location:/downloads/files/}
+2025/07/22 20:14:57 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/downloads/files//textfilesnew.mk
+2025/07/22 20:14:57 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/downloads/files//textfilesnew.mk
+2025/07/22 20:14:57 ❌ Download failed for textfilesnew.mk: chdir ./incompletes/: The system cannot find the file specified.
+2025/07/23 08:41:25 ❌ Error reading message: fetching message: [6] Not Leader For Partition: the client attempted to send messages to a replica that is not the leader for some partition, the client's metadata are likely out of date
+2025/07/23 16:04:02 ❌ Error reading message: fetching message: unexpected EOF
+2025/07/23 16:04:13 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:04:28 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:04:43 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:04:58 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:05:13 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:05:28 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:05:43 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:05:58 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:06:14 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:06:29 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/23 16:06:44 ❌ Error reading message: fetching message: EOF
+2025/07/23 16:06:59 ❌ Error reading message: fetching message: EOF
+2025/07/23 16:07:14 ❌ Error reading message: fetching message: EOF
+2025/07/23 16:10:01 ✅ Kafka consumer is now listening for messages...
+2025/07/23 16:12:49 ⬇️  Preparing to download: {Hash:abcd1 Name:ewFranNondo.mk Location:/Downloads/new/}
+2025/07/23 16:12:49 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new//ewFranNondo.mk
+2025/07/23 16:12:49 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new//ewFranNondo.mk
+2025/07/23 16:12:49 ❌ Download failed for ewFranNondo.mk: chdir ./incompletes/: The system cannot find the file specified.
+2025/07/23 16:53:29 ✅ Kafka consumer is now listening for messages...
+2025/07/23 16:54:25 ⬇️  Preparing to download: {Hash:abc234 Name:newFranNondoGT.mkv Location:/Downloads/new/}
+2025/07/23 16:54:25 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c pget -n 4 -c sftp://user:pass@example.com/Downloads/new//newFranNondoGT.mkv
+2025/07/23 16:54:25 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c pget -n 4 -c sftp://user:pass@example.com/Downloads/new//newFranNondoGT.mkv
+2025/07/23 16:54:25 ❌ Download failed for newFranNondoGT.mkv: exit status 127
+2025/07/23 17:02:03 ⬇️  Preparing to download: {Hash:abc134 Name:newBabyGT.mkv Location:/Downloads/new}
+2025/07/23 17:02:03 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c pget -n 4 -c sftp://user:pass@example.com/Downloads/new/newBabyGT.mkv
+2025/07/23 17:02:03 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c pget -n 4 -c sftp://user:pass@example.com/Downloads/new/newBabyGT.mkv
+2025/07/23 17:02:04 ❌ Download failed for newBabyGT.mkv: exit status 127
+2025/07/23 18:12:29 ✅ Kafka consumer is now listening for messages...
+2025/07/23 18:14:26 ⬇️  Preparing to download: {Hash:abcd234 Name:newBabyGT.mks Location:/Downloads/new}
+2025/07/23 18:14:26 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new/newBabyGT.mks
+2025/07/23 18:14:26 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new/newBabyGT.mks
+2025/07/23 18:14:26 ❌ Download failed for newBabyGT.mks: exit status 127
+2025/07/23 18:15:29 ✅ Kafka consumer is now listening for messages...
+2025/07/23 18:16:17 ⬇️  Preparing to download: {Hash:abcd1234 Name:newGOATBaby.mk Location:/Downloads/new}
+2025/07/23 18:16:17 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new/newGOATBaby.mk
+2025/07/23 18:16:17 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/new/newGOATBaby.mk
+2025/07/23 18:16:18 ❌ Download failed for newGOATBaby.mk: exit status 127
+2025/07/25 21:32:51 ✅ Kafka consumer is now listening for messages...
+2025/07/25 21:33:01 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:33:17 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:33:32 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:33:47 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:34:02 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:34:17 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:34:32 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:34:47 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:35:03 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:35:18 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:35:33 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:35:48 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:36:03 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:36:18 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:36:33 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:36:48 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:37:03 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:37:18 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:37:33 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:37:48 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:38:04 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:38:19 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:38:34 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:38:49 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:39:04 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:39:19 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:39:34 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 21:39:49 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 22:59:25 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 22:59:40 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 22:59:55 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:00:10 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:00:25 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:00:40 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:00:55 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:01:10 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:01:25 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:01:40 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:01:55 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:02:10 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:02:25 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:02:40 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:02:55 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:03:10 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:03:25 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:03:40 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:03:55 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:04:10 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:04:26 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:04:41 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:04:56 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:05:11 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:05:26 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:05:41 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:05:56 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:06:11 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:06:27 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:06:42 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:06:57 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:07:12 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:07:27 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:07:42 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:07:57 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:08:12 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:08:27 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:08:43 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:08:58 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:09:13 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:09:28 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:09:43 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:09:58 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:10:13 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:10:28 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:10:43 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:10:59 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:11:14 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:11:29 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:11:44 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:11:59 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:12:14 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:12:29 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:12:45 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:13:00 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:13:15 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:13:30 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:13:45 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:14:00 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:14:15 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:14:30 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:14:45 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:15:01 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:15:16 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:15:31 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:15:46 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:16:01 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:16:16 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:16:32 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:16:47 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:17:02 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:17:17 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:17:32 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:17:47 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:18:02 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:18:18 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/07/25 23:18:33 ❌ Error reading message: fetching message: failed to dial: failed to open connection to localhost:9094: dial tcp [::1]:9094: connectex: No connection could be made because the target machine actively refused it.
+2025/08/02 19:50:33 ✅ Kafka consumer is now listening for messages...
+2025/08/02 21:29:38 ✅ Kafka consumer is now listening for messages...
+2025/08/02 21:30:04 ⬇️  Preparing to download: {Hash:abc26 Name:newGoatBBY.mk Location:/Downloads/New}
+2025/08/02 21:30:04 🛠 Executing command: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/New/newGoatBBY.mk
+2025/08/02 21:30:04 🚀 Running download: C:\Windows\system32\wsl.exe lftp -c mirror --use-pget-n=4 -p -c sftp://user:pass@example.com/Downloads/New/newGoatBBY.mk

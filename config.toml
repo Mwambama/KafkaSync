@@ -1,0 +1,12 @@
+kafka_url = "localhost:9094"
+num_threads = 4
+debug_level = "debug"
+
+[remoteDetails]
+host = "example.com"
+username = "user"
+password = "pass"
+
+[locations]
+incompletes = "./incompletes/"
+completes = "./completes/"
