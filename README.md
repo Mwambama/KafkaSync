@@ -1,7 +1,6 @@
 # KafkaSync
 
-**KafkaSync** is a fault-tolerant, Kafka-based file synchronization and download system designed to ensure safe and complete transfers between a remote and local server. It is ideal for scenarios where data integrity is critical, such as edge computing, telemetry syncing, or CDN replication.
-
+**KafkaSync** A reliable, event-driven file synchronization system built with Go and Kafka. This project automates the transfer of files from a remote SFTP server by using Kafka as a message broker to trigger downloads managed by a resilient consumer.
 ## 🚀 Key Features
 
 - 🔔 Event-driven file transfer using **Kafka** (Producer → Consumer architecture)
