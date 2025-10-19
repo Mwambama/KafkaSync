@@ -22,28 +22,9 @@ This project mimics the architecture used in modern data engineering and DevOps 
 📝 Detailed Logging: Logs all actions (job reception, download attempts, successes, and failures) to both the console and a consumer.log file for traceability.
 
 ## 🛠️ System Architecture & Workflow
-The system is composed of two main applications that communicate via a Kafka topic.
+The system is made of two main applications that communicate -> Kafka topic.
 
-+------------------+      +---------------------------+      +------------------+
-|                  |      |                           |      |                  |
-|   Go Producer    |----->|   Kafka (KRaft Mode)      |----->|   Go Consumer    |
-| (cmd/producer)   |      |     (Docker Container)    |      | (cmd/consumer)   |
-|                  |      |                           |      |                  |
-+------------------+      +---------------------------+      +------------------+
-        |                                                              |
-        | 1. Sends JSON message                                        | 3. Receives JSON & triggers download
-        |    { name, location, hash }                                  |
-        |                                                              |
-        V                                                              V
-+------------------+      +---------------------------+      +------------------+
-|                  |      |                           |      |                  |
-|  SFTP Server     |<-----|   LFTP (Running in WSL)   |<-----|  File System     |
-| (Remote Host)    |      |                           |      | (Windows)        |
-|                  |      | 4. Downloads file         |      |                  |
-+------------------+      +---------------------------+      +-------+----------+
-                                                                     | 5. Moves file
-                                                                     V
-                                                         [incompletes] -> [completes]
+<img width="493" height="275" alt="image" src="https://github.com/user-attachments/assets/b40e857e-c822-4051-846f-6ba07554a8f3" />
 
 The Producer sends a JSON message to the kafkasync-files topic.
 
@@ -59,23 +40,19 @@ If the download succeeds, the consumer moves the file to the ./completes directo
 ## 🔧 Getting Started
 Follow these instructions to get KafkaSync running on your local machine.
 
-Prerequisites
 Go: Version 1.21 or later.
 
 Docker Desktop: To run the Kafka container.
 
-WSL (Windows Subsystem for Linux): An Ubuntu distribution is recommended.
+WSL (Windows Subsystem for Linux): An Ubuntu distribution(recommended).
 
 LFTP: Must be installed inside your WSL distribution.
 
-Bash
 
 # Run this inside your Ubuntu/WSL terminal
 sudo apt update && sudo apt install lftp
 Installation & Setup
 Clone the Repository
-
-Bash
 
 git clone https://github.com/your-username/kafkasync.git
 cd kafkasync
@@ -97,7 +74,8 @@ password = "your-sftp-password"
 [locations]
 incompletes = "./incompletes/"
 completes = "./completes/"
-Create Download Directories Manually create the directories specified in your config.toml. The consumer will also create them if they are missing.
+Create Download Directories Manually create the directories specified in your config.toml. 
+The consumer will also create them if they are missing.
 
 PowerShell
 
@@ -108,21 +86,16 @@ You will need three separate terminals open to run the full system.
 
 Terminal 1: Start Kafka Use Docker Compose to launch the Kafka broker in KRaft mode.
 
-Bash
-
 docker-compose up -d
 Verify it's running with docker ps.
 
 Terminal 2: Run the Consumer The consumer will connect to Kafka and wait for download jobs.
 
-Bash
 
 go run ./cmd/consumer/main.go
 You should see the output: ✅ Kafka consumer is now listening for messages...
 
 Terminal 3: Run the Producer The producer will prompt you to enter file details to create a download job.
-
-Bash
 
 go run ./cmd/producer/main.go
 Follow the prompts to send a message.
@@ -130,6 +103,8 @@ Follow the prompts to send a message.
 🔢 Enter hash: 12345abcdef
 📄 Enter file name: my-test-file.mkv
 🌐 Enter remote location: /path/to/remote/files/
+
+
 
 ## 🗺️ Future Roadmap
 This project has a strong foundation and can be extended with several professional-grade features:
