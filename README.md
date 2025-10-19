@@ -11,17 +11,23 @@ A Go-based consumer listens for these jobs, executes high-performance downloads 
 This project copies the architecture used in modern data engineering and DevOps for data ingestion and automation, showing proficiency in event-driven architecture, distributed systems, and cross-platform integration (Windows/Go + Linux/WSL).
 
 ## 🚀 Key Features
-📦 Event-Driven Architecture: Uses a Producer/Consumer model with Kafka to decouple file detection from the download process.
+📦 Event-Driven Architecture:
+Uses a Producer/Consumer model with Kafka to separate file detection from the download process.
 
-📨 Structured Messaging: Sends download jobs as structured JSON messages, carrying metadata like filename, remote path, and hash.
+📨 Structured Messaging: 
+Sends download jobs as structured JSON messages, carrying metadata like filename, remote path, and hash.
 
-⚙️ High-Performance Transfers: Leverages LFTP (via WSL) for robust and parallelized SFTP downloads, supporting commands like pget and mirror.
+⚙️ High-Performance Transfers: 
+Leverages LFTP (via WSL) for robust and parallelized SFTP downloads, supporting commands like pget and mirror.
 
-🛡️ Fault-Tolerant Consumer: Includes retry logic for failed downloads and ensures files are moved from an incompletes to a completes directory only upon success.
+🛡️ Fault-Tolerant Consumer: 
+Includes retry logic for failed downloads and ensures files are moved from an incompletes to a completes directory only upon success.
 
-🔧 Configurable: All settings, including Kafka brokers, SFTP credentials, and file paths, are managed externally in a config.toml file.
+🔧 Configurable: 
+All settings, including Kafka brokers, SFTP credentials, and file paths, are managed externally in a config.toml file.
 
-📝 Detailed Logging: Logs all actions (job reception, download attempts, successes, and failures) to both the console and a consumer.log file for traceability.
+📝 Detailed Logging: 
+Logs all actions (job reception, download attempts, successes, and failures) to both the console and a consumer.log file for traceability.
 
 ## 🛠️ System Architecture & Workflow
 The system is made of two main applications that communicate -> Kafka topic.
