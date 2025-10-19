@@ -117,7 +117,7 @@ Follow the prompts to send a message.
 
 
 ## 🗺️ Future Roadmap
-This project has a strong foundation and can be extended with several professional-grade features:
+I will update kafkaSync v2 features:
 
 [ ] 📊 Web Dashboard: A React + Tailwind CSS interface to visualize the queue of pending downloads, see transfer history, and monitor successes or failures in real-time.
 
