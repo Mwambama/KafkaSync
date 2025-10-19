@@ -1,7 +1,6 @@
 # KafkaSync
 
 **KafkaSync** A reliable, event-driven file synchronization system built with Go and Kafka. This project automates the transfer of files from a remote SFTP server by using Kafka as a message broker to trigger downloads managed by a resilient consumer.
-## 🚀 Key Features
 
 ## 📖 Overview
 In distributed systems, synchronizing large files reliably can be complex. Manual SFTP or SCP scripts lack automation, retry logic, and scalability. KafkaSync solves this by creating a robust pipeline where file transfer jobs are published as messages to a Kafka topic. A Go-based consumer listens for these jobs, executes high-performance downloads using LFTP, and ensures files are moved to their final destination only after a successful transfer.
