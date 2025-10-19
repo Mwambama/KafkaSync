@@ -40,15 +40,15 @@ If the download succeeds, the consumer moves the file to the ./completes directo
 
 
 ## 🔧 Getting Started
-Follow these instructions to get KafkaSync running on your local machine.
+Follow these instructions for KafkaSync.
 
 Go: Version 1.21 or later.
 
 Docker Desktop: To run the Kafka container.
 
-WSL (Windows Subsystem for Linux): An Ubuntu distribution(recommended).
+WSL: An Ubuntu distribution(recommended).
 
-LFTP: Must be installed inside your WSL distribution.
+LFTP: installed inside your WSL distribution.
 
 
 # Run this inside your Ubuntu/WSL terminal
@@ -58,7 +58,8 @@ Clone the Repository
 
 git clone https://github.com/your-username/kafkasync.git
 cd kafkasync
-Configure the System Create a config.toml file in the root directory and populate it with your settings. Use the example below as a template.
+Configure the System Create a config.toml file in the root directory and populate it with your settings.
+Example:
 
 Ini, TOML
 
@@ -76,6 +77,7 @@ password = "your-sftp-password"
 [locations]
 incompletes = "./incompletes/"
 completes = "./completes/"
+
 Create Download Directories Manually create the directories specified in your config.toml. 
 The consumer will also create them if they are missing.
 
