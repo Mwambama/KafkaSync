@@ -18,3 +18,11 @@ port = 5433
 user = "ks_user"
 password = "ks_password"
 dbname = "kafkasync_db"
+#  S3 / MinIO Config
+[objectStorage]
+endpoint = "localhost:9000"
+access_key = "minioadmin"
+secret_key = "minioadmin"
+bucket = "kafkasync-archive"
+use_ssl = false
+region = "us-east-1"
