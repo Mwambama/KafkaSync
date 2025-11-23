@@ -7081,3 +7081,26 @@
 2025/11/23 10:12:46 ✅ File moved to completed: completes\test-file.txt
 2025/11/23 10:12:46 🗂️  Download recorded in database
 2025/11/23 10:12:46 📨 Message committed for test-file.txt
+2025/11/23 12:41:24 ✅ Connected to PostgreSQL database
+2025/11/23 12:41:24 ✅ Kafka consumer is now listening for messages...
+2025/11/23 12:41:28 ⬇️  Preparing to download: {Hash:13223 Name:test.txt Location:/uploads}
+2025/11/23 12:41:28 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/test.txt; bye
+2025/11/23 12:41:28 🚀 Running download...
+2025/11/23 12:41:29 ❌ Download failed for test.txt: exit status 1
+2025/11/23 12:41:29 🗂️  Download recorded in database
+2025/11/23 13:14:43 ⬇️  Preparing to download: {Hash:14235 Name:invoice_2025.pdf Location:/uploads}
+2025/11/23 13:14:43 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/invoice_2025.pdf; bye
+2025/11/23 13:14:43 🚀 Running download...
+2025/11/23 13:14:44 ✅ File moved to completed: completes\invoice_2025.pdf
+2025/11/23 13:14:44 🗂️  Download recorded in database
+2025/11/23 13:14:44 📨 Message committed for invoice_2025.pdf
+2025/11/23 16:26:07 ⬇️  Preparing to download: {Hash:13423 Name:cloud-test.txt Location:/uploads}
+2025/11/23 16:26:07 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/cloud-test.txt; bye
+2025/11/23 16:26:07 🚀 Running download...
+2025/11/23 16:26:08 ✅ File moved to completed: completes\cloud-test.txt
+2025/11/23 16:26:08 🗂️  Download recorded in database
+2025/11/23 16:26:08 📨 Message committed for cloud-test.txt
+2025/11/23 16:41:14 ✅ Connected to PostgreSQL database
+2025/11/23 16:41:14 ❌ Failed to connect to S3/MinIO: Access Denied.
+2025/11/23 16:48:37 ✅ Connected to PostgreSQL database
+2025/11/23 16:48:37 ❌ Failed to connect to S3/MinIO: Access Denied.
