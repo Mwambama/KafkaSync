@@ -109,8 +109,9 @@ func main() {
 
 		// ⚙️ Build remote command
 		remoteCommand := genRemoteCommand(notification.Location, notification.Name)
-		//cmd := exec.Command("lftp", "-c", remoteCommand)
-		cmd := exec.Command("wsl.exe", "lftp", "-c", remoteCommand) // using wsl for Windows compatibility to utulize lftp
+
+		// Use "-e" instead of "-c" to allow command chaining
+		cmd := exec.Command("wsl.exe", "lftp", "-e", remoteCommand)
 
 		cmd.Dir = conf.Locations.Incompletes
 
@@ -120,27 +121,17 @@ func main() {
 			cmd.Stdout = os.Stdout
 			cmd.Stderr = os.Stderr
 		}
-		log.Printf("🚀 Running download: %s", cmd.String())
+		log.Printf("🚀 Running download...")
 
 		if err := cmd.Run(); err != nil {
 			log.Printf("❌ Download failed for %s: %v", notification.Name, err)
 			continue
 		}
 
-		// ✅ Move from incompletes to completes
-		// from := conf.Locations.Incompletes + notification.Name
-		// to := conf.Locations.Completes + notification.Name
-		// if err := os.Rename(from, to); err != nil {
-		// 	log.Printf("❌ Failed to move file from incompletes to completes: %v", err)
-		// 	continue
-		// }
-
-		// log.Printf("✅ File downloaded and moved: %s", to)
-
-		// ✅ Move from incompletes to completes using safe path handling
+		// Move from incompletes to completes using safe path handling
 		from := filepath.Join(conf.Locations.Incompletes, notification.Name)
 
-		// 🧪 Confirm file exists before moving
+		// Confirm file exists before moving
 		if _, err := os.Stat(from); os.IsNotExist(err) {
 			log.Printf("❌ File not found after download: %s", from)
 			continue
@@ -154,17 +145,7 @@ func main() {
 		}
 		log.Printf("✅ File moved to completed: %s", to)
 
-		// Optional: Commit the message
-		// reader.CommitMessages(ctx, message)
-
 		log.Printf("📨 Message committed for %s", notification.Name)
-
-		if conf.DebugLevel == "debug" {
-			log.Printf("🛠 Executing command: %s", cmd.String())
-			cmd.Stdout = os.Stdout
-			cmd.Stderr = os.Stderr
-		}
-
 	}
 }
 
@@ -181,8 +162,13 @@ func genRemoteCommand(location, name string) string {
 		safeName,
 	)
 
+	var lftpCommand string
 	if strings.HasSuffix(name, ".mkv") {
-		return fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
+		lftpCommand = fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
+	} else {
+		lftpCommand = fmt.Sprintf("mirror --use-pget-n=%d -p -c %s", conf.NumThreads, fullRemote)
 	}
-	return fmt.Sprintf("mirror --use-pget-n=%d -p -c %s", conf.NumThreads, fullRemote)
+
+	// Prepend 'set sftp:auto-confirm yes;' to fix host key errors
+	return fmt.Sprintf("set sftp:auto-confirm yes; %s; bye", lftpCommand)
 }
