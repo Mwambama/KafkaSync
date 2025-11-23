@@ -14,7 +14,7 @@ completes = "./completes/"
 #: Database Settings
 [database]
 host = "localhost"
-port = 5432
+port = 5433
 user = "ks_user"
 password = "ks_password"
 dbname = "kafkasync_db"

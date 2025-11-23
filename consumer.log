@@ -7056,3 +7056,20 @@
 2025/11/22 23:47:26 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
 2025/11/22 23:50:09 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
 2025/11/22 23:53:32 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 07:13:33 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 07:28:54 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 07:52:57 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 07:56:49 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 07:56:58 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 08:14:42 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 08:19:19 ❌ Database unreachable: pq: password authentication failed for user "ks_user"
+2025/11/23 08:25:55 ❌ Database unreachable: dial tcp [::1]:5433: connectex: No connection could be made because the target machine actively refused it.
+2025/11/23 08:29:51 ✅ Connected to PostgreSQL database
+2025/11/23 08:29:51 ✅ Kafka consumer is now listening for messages...
+2025/11/23 08:53:42 ✅ Connected to PostgreSQL database
+2025/11/23 08:53:42 ✅ Kafka consumer is now listening for messages...
+2025/11/23 08:53:46 ⬇️  Preparing to download: {Hash:12364 Name:test-file.txt Location:/uploads}
+2025/11/23 08:53:46 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/test-file.txt; bye
+2025/11/23 08:53:46 🚀 Running download...
+2025/11/23 08:53:46 ❌ Download failed for test-file.txt: exit status 1
+2025/11/23 08:53:46 🗂️  Download recorded in database
