@@ -14,25 +14,26 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	_ "github.com/lib/pq" // ✅ Postgres driver
+	_ "github.com/lib/pq"
+	"github.com/minio/minio-go/v7"
+	"github.com/minio/minio-go/v7/pkg/credentials"
 	"github.com/segmentio/kafka-go"
 )
 
-// 📦 DownloadNotification defines the JSON structure expected from Kafka
 type DownloadNotification struct {
 	Hash     string `json:"info_hash"`
 	Name     string `json:"name"`
 	Location string `json:"location"`
 }
 
-// 📁 Config structs
 type tomlConfig struct {
-	KafkaUrl      string `toml:"kafka_url"`
-	NumThreads    int    `toml:"num_threads"`
-	DebugLevel    string `toml:"debug_level"`
-	RemoteDetails remoteDetails
-	Locations     locations
-	Database      databaseConfig // ✅ New DB config
+	KafkaUrl      string         `toml:"kafka_url"`
+	NumThreads    int            `toml:"num_threads"`
+	DebugLevel    string         `toml:"debug_level"`
+	RemoteDetails remoteDetails  `toml:"remoteDetails"`
+	Locations     locations      `toml:"locations"`
+	Database      databaseConfig `toml:"database"`
+	ObjectStorage s3Config       `toml:"objectStorage"` // ✅ New S3 config
 }
 
 type remoteDetails struct {
@@ -54,8 +55,18 @@ type databaseConfig struct {
 	DbName   string
 }
 
+type s3Config struct {
+	Endpoint  string
+	AccessKey string
+	SecretKey string
+	Bucket    string
+	UseSSL    bool
+	Region    string
+}
+
 var conf tomlConfig
-var db *sql.DB // ✅ Global DB connection
+var db *sql.DB
+var minioClient *minio.Client // ✅ Global S3 Client
 
 func init() {
 	if _, err := toml.DecodeFile("config.toml", &conf); err != nil {
@@ -63,7 +74,6 @@ func init() {
 	}
 }
 
-// 📁 ensureDir creates the directory if it doesn't exist
 func ensureDir(path string) error {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return os.MkdirAll(path, 0755)
@@ -71,7 +81,6 @@ func ensureDir(path string) error {
 	return nil
 }
 
-// ✅ Initialize Database
 func initDB() {
 	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		conf.Database.Host, conf.Database.Port, conf.Database.User, conf.Database.Password, conf.Database.DbName)
@@ -81,14 +90,11 @@ func initDB() {
 	if err != nil {
 		log.Fatalf("❌ Failed to connect to database: %v", err)
 	}
-
 	if err = db.Ping(); err != nil {
 		log.Fatalf("❌ Database unreachable: %v", err)
 	}
-
 	log.Println("✅ Connected to PostgreSQL database")
 
-	// Create table if not exists
 	query := `
 	CREATE TABLE IF NOT EXISTS downloads (
 		id SERIAL PRIMARY KEY,
@@ -98,14 +104,54 @@ func initDB() {
 		status TEXT,
 		downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	);`
-
-	_, err = db.Exec(query)
-	if err != nil {
+	if _, err := db.Exec(query); err != nil {
 		log.Fatalf("❌ Failed to create table: %v", err)
 	}
 }
 
-// ✅ Record download in Database
+// ✅ Initialize MinIO/S3
+func initS3() {
+	var err error
+	minioClient, err = minio.New(conf.ObjectStorage.Endpoint, &minio.Options{
+		Creds:  credentials.NewStaticV4(conf.ObjectStorage.AccessKey, conf.ObjectStorage.SecretKey, ""),
+		Secure: conf.ObjectStorage.UseSSL,
+	})
+	if err != nil {
+		log.Fatalf("❌ Failed to create S3 client: %v", err)
+	}
+
+	// Check connection by checking/creating bucket
+	ctx := context.Background()
+	exists, err := minioClient.BucketExists(ctx, conf.ObjectStorage.Bucket)
+	if err != nil {
+		log.Fatalf("❌ Failed to connect to S3/MinIO: %v", err)
+	}
+	if !exists {
+		err = minioClient.MakeBucket(ctx, conf.ObjectStorage.Bucket, minio.MakeBucketOptions{Region: conf.ObjectStorage.Region})
+		if err != nil {
+			log.Fatalf("❌ Failed to create bucket: %v", err)
+		}
+		log.Printf("✅ Created new bucket: %s", conf.ObjectStorage.Bucket)
+	} else {
+		log.Printf("✅ Connected to S3 Bucket: %s", conf.ObjectStorage.Bucket)
+	}
+}
+
+// ✅ Upload file to S3
+func uploadToStorage(filePath string, filename string) error {
+	ctx := context.Background()
+	contentType := "application/octet-stream"
+
+	// Upload the file
+	info, err := minioClient.FPutObject(ctx, conf.ObjectStorage.Bucket, filename, filePath, minio.PutObjectOptions{ContentType: contentType})
+	if err != nil {
+		return err
+	}
+
+	log.Printf("☁️  Successfully uploaded %s to cloud (Size: %d bytes)", filename, info.Size)
+	return nil
+}
+
 func recordDownload(notification DownloadNotification, status string) {
 	query := `INSERT INTO downloads (filename, remote_location, hash, status) VALUES ($1, $2, $3, $4)`
 	_, err := db.Exec(query, notification.Name, notification.Location, notification.Hash, status)
@@ -117,7 +163,6 @@ func recordDownload(notification DownloadNotification, status string) {
 }
 
 func main() {
-	// 🔧 Setup logging
 	logFile, err := os.OpenFile("consumer.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		fmt.Printf("❌ Failed to open log file: %v\n", err)
@@ -127,7 +172,6 @@ func main() {
 	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
 	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
 
-	// 🔧 Ensure directories
 	if err := ensureDir(conf.Locations.Incompletes); err != nil {
 		log.Fatalf("❌ Failed to create incompletes directory: %v", err)
 	}
@@ -135,10 +179,9 @@ func main() {
 		log.Fatalf("❌ Failed to create completes directory: %v", err)
 	}
 
-	// 🔧 Initialize Database
 	initDB()
+	initS3() // Connect to Cloud
 
-	// ⚙️ Kafka configuration
 	reader := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:        []string{conf.KafkaUrl},
 		Topic:          "kafkasync-files",
@@ -167,15 +210,10 @@ func main() {
 
 		log.Printf("⬇️  Preparing to download: %+v\n", notification)
 
-		// ⚙️ Build remote command
 		remoteCommand := genRemoteCommand(notification.Location, notification.Name)
-
-		// ✅ Use "-e" to allow command chaining
 		cmd := exec.Command("wsl.exe", "lftp", "-e", remoteCommand)
-
 		cmd.Dir = conf.Locations.Incompletes
 
-		// 🔧 Capture and show output
 		if conf.DebugLevel == "debug" {
 			log.Printf("🛠 Executing command: %s", cmd.String())
 			cmd.Stdout = os.Stdout
@@ -185,15 +223,11 @@ func main() {
 
 		if err := cmd.Run(); err != nil {
 			log.Printf("❌ Download failed for %s: %v", notification.Name, err)
-			// Log failure to DB (optional)
 			recordDownload(notification, "FAILED")
 			continue
 		}
 
-		// ✅ Move from incompletes to completes using safe path handling
 		from := filepath.Join(conf.Locations.Incompletes, notification.Name)
-
-		// 🧪 Confirm file exists before moving
 		if _, err := os.Stat(from); os.IsNotExist(err) {
 			log.Printf("❌ File not found after download: %s", from)
 			recordDownload(notification, "MISSING")
@@ -201,7 +235,6 @@ func main() {
 		}
 
 		to := filepath.Join(conf.Locations.Completes, notification.Name)
-
 		if err = os.Rename(from, to); err != nil {
 			log.Printf("❌ Failed to move %s to completes: %v", notification.Name, err)
 			recordDownload(notification, "MOVE_FAILED")
@@ -209,14 +242,19 @@ func main() {
 		}
 		log.Printf("✅ File moved to completed: %s", to)
 
-		// ✅ Log Success to Database
-		recordDownload(notification, "COMPLETED")
+		// Upload to Cloud
+		err = uploadToStorage(to, notification.Name)
+		if err != nil {
+			log.Printf("❌ Failed to upload to S3: %v", err)
+			recordDownload(notification, "UPLOAD_FAILED")
+		} else {
+			recordDownload(notification, "COMPLETED_AND_UPLOADED")
+		}
 
 		log.Printf("📨 Message committed for %s", notification.Name)
 	}
 }
 
-// 🔧 Generate LFTP command
 func genRemoteCommand(location, name string) string {
 	safeName := strings.ReplaceAll(name, " ", "\\ ")
 	safeName = strings.ReplaceAll(safeName, "'", "\\'")
@@ -229,9 +267,6 @@ func genRemoteCommand(location, name string) string {
 		safeName,
 	)
 
-	// ✅ FIX: Always use pget for files
 	lftpCommand := fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
-
-	// Prepend 'set sftp:auto-confirm yes;' to fix host key errors
 	return fmt.Sprintf("set sftp:auto-confirm yes; %s; bye", lftpCommand)
 }
