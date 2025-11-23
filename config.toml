@@ -4,8 +4,8 @@ debug_level = "debug"
 
 [remoteDetails]
 host = "localhost:2222"
-username = "user"
-password = "pass"
+username = "testuser"
+password = "password"
 
 [locations]
 incompletes = "./incompletes/"
