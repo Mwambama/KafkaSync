@@ -25,3 +25,15 @@ services:
     volumes:
       - ./sftp-data:/home/testuser/uploads
     command: testuser:password:1001
+   # NEW: PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=ks_user
+      - POSTGRES_PASSWORD=ks_password
+      - POSTGRES_DB=kafkasync_db
+    volumes:
+      - ./postgres-data:/var/lib/postgresql/data

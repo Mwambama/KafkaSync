@@ -110,7 +110,7 @@ func main() {
 		// ⚙️ Build remote command
 		remoteCommand := genRemoteCommand(notification.Location, notification.Name)
 
-		// Use "-e" instead of "-c" to allow command chaining
+		// ✅ Use "-e" instead of "-c" to allow command chaining
 		cmd := exec.Command("wsl.exe", "lftp", "-e", remoteCommand)
 
 		cmd.Dir = conf.Locations.Incompletes
@@ -128,10 +128,10 @@ func main() {
 			continue
 		}
 
-		// Move from incompletes to completes using safe path handling
+		// ✅ Move from incompletes to completes using safe path handling
 		from := filepath.Join(conf.Locations.Incompletes, notification.Name)
 
-		// Confirm file exists before moving
+		// 🧪 Confirm file exists before moving
 		if _, err := os.Stat(from); os.IsNotExist(err) {
 			log.Printf("❌ File not found after download: %s", from)
 			continue
@@ -162,12 +162,8 @@ func genRemoteCommand(location, name string) string {
 		safeName,
 	)
 
-	var lftpCommand string
-	if strings.HasSuffix(name, ".mkv") {
-		lftpCommand = fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
-	} else {
-		lftpCommand = fmt.Sprintf("mirror --use-pget-n=%d -p -c %s", conf.NumThreads, fullRemote)
-	}
+	// Always use pget for files (mirror is only for directories)
+	lftpCommand := fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
 
 	// Prepend 'set sftp:auto-confirm yes;' to fix host key errors
 	return fmt.Sprintf("set sftp:auto-confirm yes; %s; bye", lftpCommand)
