@@ -7073,3 +7073,11 @@
 2025/11/23 08:53:46 🚀 Running download...
 2025/11/23 08:53:46 ❌ Download failed for test-file.txt: exit status 1
 2025/11/23 08:53:46 🗂️  Download recorded in database
+2025/11/23 10:12:41 ✅ Connected to PostgreSQL database
+2025/11/23 10:12:41 ✅ Kafka consumer is now listening for messages...
+2025/11/23 10:12:44 ⬇️  Preparing to download: {Hash:14456 Name:test-file.txt Location:/uploads}
+2025/11/23 10:12:44 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/test-file.txt; bye
+2025/11/23 10:12:44 🚀 Running download...
+2025/11/23 10:12:46 ✅ File moved to completed: completes\test-file.txt
+2025/11/23 10:12:46 🗂️  Download recorded in database
+2025/11/23 10:12:46 📨 Message committed for test-file.txt
