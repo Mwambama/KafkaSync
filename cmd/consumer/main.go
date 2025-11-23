@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,6 +14,7 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
+	_ "github.com/lib/pq" // ✅ Postgres driver
 	"github.com/segmentio/kafka-go"
 )
 
@@ -30,6 +32,7 @@ type tomlConfig struct {
 	DebugLevel    string `toml:"debug_level"`
 	RemoteDetails remoteDetails
 	Locations     locations
+	Database      databaseConfig // ✅ New DB config
 }
 
 type remoteDetails struct {
@@ -43,7 +46,16 @@ type locations struct {
 	Completes   string
 }
 
+type databaseConfig struct {
+	Host     string
+	Port     int
+	User     string
+	Password string
+	DbName   string
+}
+
 var conf tomlConfig
+var db *sql.DB // ✅ Global DB connection
 
 func init() {
 	if _, err := toml.DecodeFile("config.toml", &conf); err != nil {
@@ -59,6 +71,51 @@ func ensureDir(path string) error {
 	return nil
 }
 
+// ✅ Initialize Database
+func initDB() {
+	connStr := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		conf.Database.Host, conf.Database.Port, conf.Database.User, conf.Database.Password, conf.Database.DbName)
+
+	var err error
+	db, err = sql.Open("postgres", connStr)
+	if err != nil {
+		log.Fatalf("❌ Failed to connect to database: %v", err)
+	}
+
+	if err = db.Ping(); err != nil {
+		log.Fatalf("❌ Database unreachable: %v", err)
+	}
+
+	log.Println("✅ Connected to PostgreSQL database")
+
+	// Create table if not exists
+	query := `
+	CREATE TABLE IF NOT EXISTS downloads (
+		id SERIAL PRIMARY KEY,
+		filename TEXT NOT NULL,
+		remote_location TEXT,
+		hash TEXT,
+		status TEXT,
+		downloaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	);`
+
+	_, err = db.Exec(query)
+	if err != nil {
+		log.Fatalf("❌ Failed to create table: %v", err)
+	}
+}
+
+// ✅ Record download in Database
+func recordDownload(notification DownloadNotification, status string) {
+	query := `INSERT INTO downloads (filename, remote_location, hash, status) VALUES ($1, $2, $3, $4)`
+	_, err := db.Exec(query, notification.Name, notification.Location, notification.Hash, status)
+	if err != nil {
+		log.Printf("⚠️ Failed to log to DB: %v", err)
+	} else {
+		log.Println("🗂️  Download recorded in database")
+	}
+}
+
 func main() {
 	// 🔧 Setup logging
 	logFile, err := os.OpenFile("consumer.log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
@@ -70,13 +127,16 @@ func main() {
 	log.SetOutput(io.MultiWriter(os.Stdout, logFile))
 	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
 
-	// 🔧 Ensure both incompletes and completes directories exist at startup
+	// 🔧 Ensure directories
 	if err := ensureDir(conf.Locations.Incompletes); err != nil {
 		log.Fatalf("❌ Failed to create incompletes directory: %v", err)
 	}
 	if err := ensureDir(conf.Locations.Completes); err != nil {
 		log.Fatalf("❌ Failed to create completes directory: %v", err)
 	}
+
+	// 🔧 Initialize Database
+	initDB()
 
 	// ⚙️ Kafka configuration
 	reader := kafka.NewReader(kafka.ReaderConfig{
@@ -110,7 +170,7 @@ func main() {
 		// ⚙️ Build remote command
 		remoteCommand := genRemoteCommand(notification.Location, notification.Name)
 
-		// ✅ Use "-e" instead of "-c" to allow command chaining
+		// ✅ Use "-e" to allow command chaining
 		cmd := exec.Command("wsl.exe", "lftp", "-e", remoteCommand)
 
 		cmd.Dir = conf.Locations.Incompletes
@@ -125,6 +185,8 @@ func main() {
 
 		if err := cmd.Run(); err != nil {
 			log.Printf("❌ Download failed for %s: %v", notification.Name, err)
+			// Log failure to DB (optional)
+			recordDownload(notification, "FAILED")
 			continue
 		}
 
@@ -134,6 +196,7 @@ func main() {
 		// 🧪 Confirm file exists before moving
 		if _, err := os.Stat(from); os.IsNotExist(err) {
 			log.Printf("❌ File not found after download: %s", from)
+			recordDownload(notification, "MISSING")
 			continue
 		}
 
@@ -141,9 +204,13 @@ func main() {
 
 		if err = os.Rename(from, to); err != nil {
 			log.Printf("❌ Failed to move %s to completes: %v", notification.Name, err)
+			recordDownload(notification, "MOVE_FAILED")
 			continue
 		}
 		log.Printf("✅ File moved to completed: %s", to)
+
+		// ✅ Log Success to Database
+		recordDownload(notification, "COMPLETED")
 
 		log.Printf("📨 Message committed for %s", notification.Name)
 	}
@@ -162,7 +229,7 @@ func genRemoteCommand(location, name string) string {
 		safeName,
 	)
 
-	// Always use pget for files (mirror is only for directories)
+	// ✅ FIX: Always use pget for files
 	lftpCommand := fmt.Sprintf("pget -n %d -c %s", conf.NumThreads, fullRemote)
 
 	// Prepend 'set sftp:auto-confirm yes;' to fix host key errors
