@@ -2,7 +2,7 @@ KafkaSync
 
 KafkaSync is a fault-tolerant, distributed file synchronization system designed to automate the reliable transfer of files from a remote SFTP server. It uses Apache Kafka as a high-throughput message broker to decouple file detection from processing, ensuring data integrity and scalability.
 
-📖 Overview
+ Overview
 
 In distributed systems, synchronizing large files reliably is complex. Traditional manual scripts lack automation, retry logic, and auditability.
 
@@ -18,23 +18,23 @@ Monitor: All activities are logged to a PostgreSQL database and visualized on a 
 
 This project mimics the architecture used in modern data engineering pipelines, demonstrating proficiency in event-driven design, distributed systems, and cross-platform integration (Windows/Go + Linux/WSL).
 
-🚀 Key Features
+ Key Features
 
-🔔 Event-Driven Architecture: Decouples the source (Producer) from the destination (Consumer) using Kafka.
+ Event-Driven Architecture: Decouples the source (Producer) from the destination (Consumer) using Kafka.
 
-⚙️ High-Performance Transfers: Leverages LFTP (via WSL) for robust, multi-threaded SFTP downloads (pget/mirror).
+ High-Performance Transfers: Leverages LFTP (via WSL) for robust, multi-threaded SFTP downloads (pget/mirror).
 
-☁️ Cloud Archiving: Automatically uploads completed files to S3-compatible storage (AWS/MinIO).
+ Cloud Archiving: Automatically uploads completed files to S3-compatible storage (AWS/MinIO).
 
-🗂️ Structured Metadata: Records every transaction status (Success/Fail) in a PostgreSQL database.
+ Structured Metadata: Records every transaction status (Success/Fail) in a PostgreSQL database.
 
-📊 Real-Time Dashboard: A React + Tailwind CSS interface to monitor the queue, transfer history, and system status.
+ Real-Time Dashboard: A React + Tailwind CSS interface to monitor the queue, transfer history, and system status.
 
-🛡️ Reliability: Includes retry logic for failed downloads and ensures atomic file movement (staging → completed).
+ Reliability: Includes retry logic for failed downloads and ensures atomic file movement (staging → completed).
 
 🔧 Configurable: Centralized config.toml for managing brokers, credentials, and paths without code changes.
 
-🛠️ System Architecture
+ System Architecture
 
 <!-- <img width="493" height="275" alt="KafkaSync Architecture" src="https://github.com/user-attachments/assets/b40e857e-c822-4051-846f-6ba07554a8f3" /> -->
 
