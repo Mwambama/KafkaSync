@@ -56,13 +56,23 @@ type databaseConfig struct {
 }
 
 type s3Config struct {
-	Endpoint  string
-	AccessKey string
-	SecretKey string
-	Bucket    string
-	UseSSL    bool
-	Region    string
+	Endpoint  string `toml:"endpoint"`
+	AccessKey string `toml:"access_key"` // <--- Tag tells Go to read "access_key"
+	SecretKey string `toml:"secret_key"` // <--- Tag tells Go to read "secret_key"
+	Bucket    string `toml:"bucket"`
+	UseSSL    bool   `toml:"use_ssl"`
+	Region    string `toml:"region"`
 }
+
+// ✅ S3 / MinIO Config but uses the tomlConfig definition bt does not read it right
+// type s3Config struct {
+// 	Endpoint  string
+// 	AccessKey string
+// 	SecretKey string
+// 	Bucket    string
+// 	UseSSL    bool
+// 	Region    string
+// }
 
 var conf tomlConfig
 var db *sql.DB
