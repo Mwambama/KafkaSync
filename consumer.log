@@ -7112,3 +7112,19 @@
 2025/11/23 18:44:44 ❌ Failed to connect to S3/MinIO: Access Denied.
 2025/11/23 19:03:42 ✅ Connected to PostgreSQL database
 2025/11/23 19:03:43 ❌ Failed to connect to S3/MinIO: Access Denied.
+2025/11/23 19:35:44 ✅ Connected to PostgreSQL database
+2025/11/23 19:35:44 ✅ Created new bucket: kafkasync-archive
+2025/11/23 19:35:44 ✅ Kafka consumer is now listening for messages...
+2025/11/23 19:56:16 ✅ Connected to PostgreSQL database
+2025/11/23 19:56:16 ✅ Connected to S3 Bucket: kafkasync-archive
+2025/11/23 19:56:16 ✅ Kafka consumer is now listening for messages...
+2025/11/23 19:56:40 ⬇️  Preparing to download: {Hash:15346 Name:cloud-test.txt Location:/uploads}
+2025/11/23 19:56:40 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/cloud-test.txt; bye
+2025/11/23 19:56:40 🚀 Running download...
+2025/11/23 19:56:41 ❌ Download failed for cloud-test.txt: exit status 1
+2025/11/23 19:56:41 🗂️  Download recorded in database
+2025/11/23 19:58:20 ⬇️  Preparing to download: {Hash:15246 Name:minio-test.txt Location:/uploads}
+2025/11/23 19:58:20 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/minio-test.txt; bye
+2025/11/23 19:58:20 🚀 Running download...
+2025/11/23 19:58:20 ❌ Download failed for minio-test.txt: exit status 1
+2025/11/23 19:58:20 🗂️  Download recorded in database
