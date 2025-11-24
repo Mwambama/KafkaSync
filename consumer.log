@@ -7128,3 +7128,13 @@
 2025/11/23 19:58:20 🚀 Running download...
 2025/11/23 19:58:20 ❌ Download failed for minio-test.txt: exit status 1
 2025/11/23 19:58:20 🗂️  Download recorded in database
+2025/11/23 20:16:42 ✅ Connected to PostgreSQL database
+2025/11/23 20:16:42 ✅ Connected to S3 Bucket: kafkasync-archive
+2025/11/23 20:16:42 ✅ Kafka consumer is now listening for messages...
+2025/11/23 20:16:45 ⬇️  Preparing to download: {Hash:15246 Name:cloud-test.txt Location:/uploads}
+2025/11/23 20:16:45 🛠 Executing command: C:\WINDOWS\system32\wsl.exe lftp -e set sftp:auto-confirm yes; pget -n 4 -c sftp://testuser:password@localhost:2222/uploads/cloud-test.txt; bye
+2025/11/23 20:16:45 🚀 Running download...
+2025/11/23 20:16:46 ✅ File moved to completed: completes\cloud-test.txt
+2025/11/23 20:16:46 ☁️  Successfully uploaded cloud-test.txt to cloud (Size: 76 bytes)
+2025/11/23 20:16:46 🗂️  Download recorded in database
+2025/11/23 20:16:46 📨 Message committed for cloud-test.txt
