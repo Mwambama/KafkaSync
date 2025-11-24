@@ -36,7 +36,7 @@ This project mimics the architecture used in modern data engineering pipelines, 
 
 🛠️ System Architecture
 
-<img width="493" height="275" alt="KafkaSync Architecture" src="https://github.com/user-attachments/assets/b40e857e-c822-4051-846f-6ba07554a8f3" />
+<!-- <img width="493" height="275" alt="KafkaSync Architecture" src="https://github.com/user-attachments/assets/b40e857e-c822-4051-846f-6ba07554a8f3" /> -->
 
 Producer sends a JSON message ({name, location, hash}) to the kafkasync-files topic.
 
