@@ -7104,3 +7104,7 @@
 2025/11/23 16:41:14 ❌ Failed to connect to S3/MinIO: Access Denied.
 2025/11/23 16:48:37 ✅ Connected to PostgreSQL database
 2025/11/23 16:48:37 ❌ Failed to connect to S3/MinIO: Access Denied.
+2025/11/23 18:33:09 ✅ Connected to PostgreSQL database
+2025/11/23 18:33:09 ❌ Failed to connect to S3/MinIO: Access Denied.
+2025/11/23 18:43:30 ✅ Connected to PostgreSQL database
+2025/11/23 18:43:30 ❌ Failed to connect to S3/MinIO: Access Denied.
