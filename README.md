@@ -32,7 +32,7 @@ This project mimics the architecture used in modern data engineering pipelines, 
 
  Reliability: Includes retry logic for failed downloads and ensures atomic file movement (staging → completed).
 
-🔧 Configurable: Centralized config.toml for managing brokers, credentials, and paths without code changes.
+ Configurable: Centralized config.toml for managing brokers, credentials, and paths without code changes.
 
  System Architecture
 
@@ -54,7 +54,7 @@ Logs the result to PostgreSQL.
 
 API Server reads the database and feeds the React Dashboard.
 
-🔧 Getting Started
+ Getting Started
 
 Prerequisites
 
@@ -116,7 +116,7 @@ mkdir incompletes
 mkdir completes
 
 
-🏃 Running the Application
+ Running the Application
 
 You will need 4 terminal windows to run the full stack.
 
@@ -157,7 +157,7 @@ go run ./cmd/producer/main.go
 
 Follow the prompts: Name: test-data.txt, Location: /uploads.
 
-🗺️ Future Roadmap
+ Future Roadmap
 
 [ ] Metrics & Monitoring: Integrate Prometheus to export download speeds and queue lag metrics to Grafana.
 
@@ -165,6 +165,6 @@ Follow the prompts: Name: test-data.txt, Location: /uploads.
 
 [ ] Containerization: Dockerize the Producer, Consumer, and API Server for single-command deployment.
 
-📜 License
+ License
 
 This project is licensed under the MIT License. See the LICENSE file for details.
